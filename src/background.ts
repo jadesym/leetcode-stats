@@ -9,6 +9,8 @@ const LEETCODE_URL_MATCH = "*://leetcode.com/*";
 const LEETCODE_DOMAIN = "leetcode.domain";
 
 function setBadgeNumber(num: number): void {
+  const newBadgeText: string = num.toString();
+  console.log(`Set badge text to [${newBadgeText}] at time [${new Date().toLocaleString()}]`);
   chrome.action.setBadgeBackgroundColor({ color: "#FE0000" });
   chrome.action.setBadgeText({ text: num.toString() });
 }
@@ -74,8 +76,9 @@ async function initiateSubmissionsMessagePassing() {
     }
   });
 
-  setInterval(sendGetSubmissionsMessage, 10000);
+  setInterval(sendGetSubmissionsMessage, DEFAULT_POLLING_RATE);
 }
 
 initiateSubmissionsMessagePassing();
-setInterval(() => console.log(new Date().getTime()), 5000);
+// Heartbeat
+// setInterval(() => console.log(new Date().getTime()), 5000);
