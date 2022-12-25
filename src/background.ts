@@ -63,8 +63,6 @@ function setBadgeFromSubmissions(submissions: SubmissionArray) {
 }
 
 async function initiateSubmissionsMessagePassing() {
-  console.log("Inside getSubmissionsAndSetBadge");
-
   sendGetSubmissionsMessage();
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
