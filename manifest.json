@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Leetcode Stats",
+  "version": "1.0.0",
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "cookies",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://leetcode.com/*",
+    "https://leetcode.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://leetcode.com/*",
+        "https://leetcode.com/*"
+      ],
+      "js": [
+        "./dist/setBadge.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
