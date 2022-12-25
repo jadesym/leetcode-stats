@@ -37,8 +37,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   // console.log("Received request in setBadge");
   if (request.type === GET_SUBMISSIONS_REQUEST_TYPE) {
     sendGetSubmissionsResponse();
-    return true;
+    sendResponse({
+      wasReceived: true,
+      isTypeSupported: true
+    });
   } else {
-    return false;
+    sendResponse({
+      wasReceived: true,
+      isTypeSupported: false
+    });
   }
 });
