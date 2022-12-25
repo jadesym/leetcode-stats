@@ -14,6 +14,9 @@
     "http://leetcode.com/*",
     "https://leetcode.com/*"
   ],
+  "action": {
+
+  },
   "content_scripts": [
     {
       "matches": [

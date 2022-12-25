@@ -1,7 +1,9 @@
+export const GET_SUBMISSIONS_RESPONSE_TYPE = "getSubmissionsResponse";
+
 export type Submission = {
   id: number;
   language: string;
-  timestamp: number;
+  timestampInSeconds: number;
   status: string;
   questionId: string;
 }

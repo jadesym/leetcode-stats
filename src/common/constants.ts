@@ -1,0 +1,1 @@
+export const LEETCODE_TAB_PORT_NAME = "LEETCODE_TAB_PORT";
