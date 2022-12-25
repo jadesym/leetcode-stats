@@ -7,7 +7,7 @@ const DEFAULT_OFFSET = 0;
 const DEFAULT_LIMIT = 50;
 const REQUEST_URL = `/api/submissions?offset=${ DEFAULT_OFFSET }&limit=${ DEFAULT_LIMIT }&lastkey=`;
 
-console.log("Content Script loaded: setBadge");
+// console.log("Content Script loaded: setBadge");
 
 async function sendGetSubmissionsResponse() {
   const response = await fetch(REQUEST_URL);
@@ -34,7 +34,7 @@ async function sendGetSubmissionsResponse() {
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log("Received request in setBadge");
+  // console.log("Received request in setBadge");
   if (request.type === GET_SUBMISSIONS_REQUEST_TYPE) {
     sendGetSubmissionsResponse();
     return true;

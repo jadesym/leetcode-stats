@@ -29,25 +29,23 @@ async function sendGetSubmissionsMessage() {
     console.log(`Unable to find any tabs that match url: ${ LEETCODE_URL_MATCH }`)
     return;
   }
-  console.log(tabs);
 
   const currentTabId = tabs[0].id;
 
-  console.log(`Sending message to get submissions to tab: ${currentTabId}`);
   chrome.tabs.sendMessage(currentTabId, { type: GET_SUBMISSIONS_REQUEST_TYPE }, function(response) {
     console.log(response);
   });
 }
 
 function setBadgeFromSubmissions(submissions: SubmissionArray) {
-  console.log(`Successfully got ${submissions.length} submissions from call.`)
-  console.log(submissions);
+  // console.log(`Successfully got ${submissions.length} submissions from call.`)
+  // console.log(submissions);
 
   const dailyAcceptedSubmissions = submissions
     .filter(submission => submission.status == "Accepted")
     .filter(submission => isWithinCurrentDay(submission.timestampInSeconds));
 
-  console.log(`Daily Accepted Submissions: ${JSON.stringify(dailyAcceptedSubmissions)}`);
+  // console.log(`Daily Accepted Submissions: ${JSON.stringify(dailyAcceptedSubmissions)}`);
   const latestSubmissions = [];
   const questionSet = new Set<string>();
 
@@ -57,7 +55,7 @@ function setBadgeFromSubmissions(submissions: SubmissionArray) {
       questionSet.add(submission.questionId);
     }
   }
-  console.log(`Latest Submissions: ${JSON.stringify(latestSubmissions)}`);
+  // console.log(`Latest Submissions: ${JSON.stringify(latestSubmissions)}`);
 
   setBadgeNumber(latestSubmissions.length);
 }
