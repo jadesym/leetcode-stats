@@ -4,7 +4,7 @@ import { MessageResponseType } from './common/message';
 import { LEETCODE_TAB_PORT_NAME } from './common/constants';
 
 // 5 minutes
-const DEFAULT_POLLING_RATE_IN_MINUTES = 0.25;
+const DEFAULT_POLLING_RATE_IN_MINUTES = 5;
 const DEFAULT_POLLING_RATE = 1000 * 60 * DEFAULT_POLLING_RATE_IN_MINUTES;
 const LEETCODE_URL_MATCH = "*://leetcode.com/*";
 const LEETCODE_DOMAIN = "leetcode.domain";
@@ -40,7 +40,7 @@ async function sendGetSubmissionsMessage() {
   const tabs = await chrome.tabs.query({ status: "complete", url: LEETCODE_URL_MATCH });
 
   if (tabs.length <= 0) {
-    console.error(`Unable to find any tabs that match url: ${ LEETCODE_DOMAIN }. Try opening & logging in to a ${LEETCODE_DOMAIN} tab. Retrying in ${DEFAULT_POLLING_RATE_IN_MINUTES} minutes.`)
+    console.log(`Unable to find any tabs that match url: ${ LEETCODE_DOMAIN }. Try opening & logging in to a ${LEETCODE_DOMAIN} tab. Retrying in ${DEFAULT_POLLING_RATE_IN_MINUTES} minutes.`)
     setBadgeText('-');
     return;
   } else {
