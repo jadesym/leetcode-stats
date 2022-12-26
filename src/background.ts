@@ -66,7 +66,7 @@ async function sendGetSubmissionsMessage() {
     }
 
     if (!hasMessageSendSucceeded) {
-      console.error(`Unable to successfully send a message to all [${tabs.length}] relevant tabs. Try refreshing a ${LEETCODE_DOMAIN} tab. Retrying in ${DEFAULT_POLLING_RATE_IN_MINUTES} minutes.`);
+      console.log(`Unable to successfully send a message to all [${tabs.length}] relevant tabs. Try refreshing a ${LEETCODE_DOMAIN} tab. Retrying in ${DEFAULT_POLLING_RATE_IN_MINUTES} minutes.`);
     }
   }
 }
@@ -117,5 +117,11 @@ async function initiateSubmissionsMessagePassing() {
 
 setBadgeText('...');
 initiateSubmissionsMessagePassing();
+
+chrome.runtime.onStartup.addListener(() => {
+  console.log("Extension is starting up.");
+  initiateSubmissionsMessagePassing();
+});
+
 // Heartbeat
 // setInterval(() => console.log(new Date().getTime()), 5000);
