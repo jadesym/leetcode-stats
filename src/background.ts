@@ -3,8 +3,7 @@ import { GET_SUBMISSIONS_RESPONSE_TYPE, SubmissionArray } from './responses/type
 import { MessageResponseType } from './common/message';
 import { LEETCODE_TAB_PORT_NAME } from './common/constants';
 
-// 5 minutes
-const DEFAULT_POLLING_RATE_IN_MINUTES = 5;
+const DEFAULT_POLLING_RATE_IN_MINUTES = 3;
 const DEFAULT_POLLING_RATE = 1000 * 60 * DEFAULT_POLLING_RATE_IN_MINUTES;
 const LEETCODE_URL_MATCH = "*://leetcode.com/*";
 const LEETCODE_DOMAIN = "leetcode.domain";
