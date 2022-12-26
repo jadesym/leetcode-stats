@@ -118,10 +118,10 @@ async function initiateSubmissionsMessagePassing() {
 setBadgeText('...');
 initiateSubmissionsMessagePassing();
 
-chrome.runtime.onStartup.addListener(() => {
-  console.log("Extension is starting up.");
-  initiateSubmissionsMessagePassing();
-});
+// chrome.runtime.onStartup.addListener(() => {
+//   console.log("Extension is starting up.");
+//   initiateSubmissionsMessagePassing();
+// });
 
 // Heartbeat
 // setInterval(() => console.log(new Date().getTime()), 5000);
