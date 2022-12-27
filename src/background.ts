@@ -8,9 +8,21 @@ const DEFAULT_POLLING_RATE = 1000 * 60 * DEFAULT_POLLING_RATE_IN_MINUTES;
 const LEETCODE_URL_MATCH = "*://leetcode.com/*";
 const LEETCODE_DOMAIN = "leetcode.domain";
 
-function setBadgeText(inputString: string): void {
-  console.log(`Set badge text to [${inputString}] at time [${new Date().toLocaleString()}]`);
-  chrome.action.setBadgeBackgroundColor({ color: "#FE0000" });
+enum Colors {
+  Red = "#ff0000",
+  Green = "#3cb371",
+  Yellow = "#eedc00"
+}
+
+const COLOR_THRESHOLDS = {
+  0: Colors.Red,
+  2: Colors.Yellow,
+  5: Colors.Green
+}
+
+function setBadgeText(inputString: string, color: Colors): void {
+  console.log(`Set badge text to [${inputString}] with color [${color}] at time [${new Date().toLocaleString()}]`);
+  chrome.action.setBadgeBackgroundColor({ color });
   chrome.action.setBadgeText({ text: inputString });
 }
 
@@ -40,7 +52,7 @@ async function sendGetSubmissionsMessage() {
 
   if (tabs.length <= 0) {
     console.log(`Unable to find any tabs that match url: ${ LEETCODE_DOMAIN }. Try opening & logging in to a ${LEETCODE_DOMAIN} tab. Retrying in ${DEFAULT_POLLING_RATE_IN_MINUTES} minutes.`)
-    setBadgeText('-');
+    setBadgeText('-', Colors.Red);
     return;
   } else {
     let hasMessageSendSucceeded = false;
@@ -70,6 +82,23 @@ async function sendGetSubmissionsMessage() {
   }
 }
 
+function getColorFromSubmissionCount(count: number) {
+  let maxMetThreshold: number = 0;
+  for (const stringThreshold of Object.keys(COLOR_THRESHOLDS)) {
+    const threshold = Number(stringThreshold);
+    if (count >= threshold && threshold > maxMetThreshold) {
+      // console.log(`Count: ${count}, threshold: ${threshold}`);
+      maxMetThreshold = threshold;
+    }
+  }
+
+  const resultColor: Colors = COLOR_THRESHOLDS[maxMetThreshold];
+
+  // console.log(`Resulting Color: ${resultColor}`);
+
+  return resultColor;
+}
+
 function setBadgeFromSubmissions(submissions: SubmissionArray) {
   // console.log(`Successfully got ${submissions.length} submissions from call.`)
   // console.log(submissions);
@@ -90,7 +119,10 @@ function setBadgeFromSubmissions(submissions: SubmissionArray) {
   }
   // console.log(`Latest Submissions: ${JSON.stringify(latestSubmissions)}`);
 
-  setBadgeText(latestSubmissions.length.toString());
+  const relevantSubmissionCount = latestSubmissions.length;
+
+  setBadgeText(relevantSubmissionCount.toString(),
+    getColorFromSubmissionCount(relevantSubmissionCount));
 }
 
 async function initiateSubmissionsMessagePassing() {
@@ -114,7 +146,7 @@ async function initiateSubmissionsMessagePassing() {
   setInterval(sendGetSubmissionsMessage, DEFAULT_POLLING_RATE);
 }
 
-setBadgeText('...');
+setBadgeText('...', Colors.Red);
 initiateSubmissionsMessagePassing();
 
 // chrome.runtime.onStartup.addListener(() => {

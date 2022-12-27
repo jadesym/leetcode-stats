@@ -10,9 +10,17 @@ const REQUEST_URL = `/api/submissions?offset=${ DEFAULT_OFFSET }&limit=${ DEFAUL
 // console.log("Content Script loaded: setBadge");
 
 async function sendGetSubmissionsResponse() {
-  const response = await fetch(REQUEST_URL);
+  let responseSubmissions;
+  try {
+    const response = await fetch(REQUEST_URL);
 
-  const responseSubmissions = await response.json();
+    responseSubmissions = await response.json();
+
+  } catch (err) {
+    console.error(`Unable to fetch json response for submissions`, err);
+    throw err;
+  }
+
   // console.log(responseSubmissions);
 
   const submissions: SubmissionArray = responseSubmissions['submissions_dump'].map(responseSubmission => {
